@@ -21,6 +21,12 @@ MAX_RETRIES = 4
 RETRY_DELAY = 5
 
 
+SONY_PAL_KEYS = {
+    "keyId": "W1tLiPMAWwSJA00lR4KS6w",
+    "key": "pAGGH7mdbkHJ2eMJypg3sw",
+}
+
+
 # ---------------- RETRY FETCHER ----------------
 def get_json(url: str) -> Any:
     last_error = None
@@ -100,6 +106,9 @@ def get_sports_data() -> Dict[str, Any]:
 
 # ---------------- HELPERS ----------------
 def extract_keys(channel):
+    if channel.get("name") == "Sony Pal":
+        return SONY_PAL_KEYS["keyId"], SONY_PAL_KEYS["key"]
+
     key_id = channel.get("keyId") or ""
     key = channel.get("key") or ""
     if not key_id and isinstance(channel.get("clearkey"), dict) and channel.get("clearkey"):
